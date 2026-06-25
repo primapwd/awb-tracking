@@ -13,12 +13,17 @@ class SpreadsheetRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'freight_type_id' => ['required', 'exists:freight_types,id'],
+        $rules = [
             'label' => ['required', 'string', 'max:255'],
             'spreadsheet_id' => ['required', 'string'],
             'enabled' => ['boolean'],
             'sort_order' => ['integer'],
         ];
+
+        if ($this->isMethod('post')) {
+            $rules['freight_type_id'] = ['required', 'exists:freight_types,id'];
+        }
+
+        return $rules;
     }
 }

@@ -12,6 +12,13 @@ class FreightTypeSeeder extends Seeder
         FreightType::create([
             'key' => 'air',
             'label' => 'Air Freight',
+            'col_awb' => 'C',
+            'col_company' => 'B',
+            'col_name' => 'E',
+            'col_weight' => 'D',
+            'col_processed_date' => 'A',
+            'data_start_row' => 12,
+            'freight_date_cell' => 'B6',
         ]);
 
         FreightType::create([
