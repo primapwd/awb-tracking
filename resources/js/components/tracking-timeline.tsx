@@ -1,11 +1,9 @@
 import {
     Plane,
     Anchor,
-    Box,
     CheckCircle2,
     Calendar,
     Weight,
-    Building2,
     HelpCircle,
     ChevronRight,
 } from 'lucide-react';
@@ -26,6 +24,14 @@ type TrackingResult = {
 type Props = {
     results: TrackingResult[];
 };
+
+/**
+ * Strip the trailing " Flight" label from a freight date so only the date
+ * portion shows: "3/3 Flight" -> "3/3", "06/06" -> "06/06".
+ */
+function formatFlightDate(value: string): string {
+    return value.replace(/\s*flight\s*$/i, '').trim();
+}
 
 export default function TrackingTimeline({ results }: Props) {
     if (!results || results.length === 0) {
@@ -163,21 +169,7 @@ export default function TrackingTimeline({ results }: Props) {
                             {isProcessed ? (
                                 <div className="space-y-6 p-5 md:p-6">
                                     {/* Specs grid */}
-                                    <div className="grid grid-cols-2 gap-4 rounded-xl bg-slate-50/50 p-4 text-xs font-semibold text-slate-600 sm:grid-cols-3">
-                                        <div className="flex min-w-0 items-center gap-2">
-                                            <Building2
-                                                className="size-4 flex-shrink-0 text-slate-400"
-                                                aria-hidden="true"
-                                            />
-                                            <div className="min-w-0">
-                                                <span className="block text-[10px] tracking-wider text-slate-400 uppercase">
-                                                    Carrier
-                                                </span>
-                                                <span className="block truncate text-slate-700">
-                                                    {result.logistic_company}
-                                                </span>
-                                            </div>
-                                        </div>
+                                    <div className="grid grid-cols-1 gap-4 rounded-xl bg-slate-50/50 p-4 text-xs font-semibold text-slate-600">
                                         <div className="flex min-w-0 items-center gap-2">
                                             <Weight
                                                 className="size-4 flex-shrink-0 text-slate-400"
@@ -236,39 +228,7 @@ export default function TrackingTimeline({ results }: Props) {
                                                 />
                                             </div>
 
-                                            {/* Milestone 2: Crate Loaded */}
-                                            <div className="relative z-10 flex flex-1 items-start gap-4 md:flex-col md:items-center md:gap-3">
-                                                <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-blue-200 bg-blue-50 text-blue-600 md:h-12 md:w-12">
-                                                    <Box
-                                                        className="size-4 md:size-5"
-                                                        aria-hidden="true"
-                                                    />
-                                                </div>
-                                                <div className="flex flex-col text-left md:items-center md:text-center">
-                                                    <span className="text-xs font-bold text-slate-800">
-                                                        Cargo Bay Load
-                                                    </span>
-                                                    <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500">
-                                                        <Calendar
-                                                            className="size-3"
-                                                            aria-hidden="true"
-                                                        />
-                                                        Tab:{' '}
-                                                        {result.tab_date ||
-                                                            'N/A'}
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            {/* Arrow for Desktop */}
-                                            <div className="hidden h-12 items-center justify-center self-center text-slate-300 md:flex">
-                                                <ChevronRight
-                                                    className="size-4"
-                                                    aria-hidden="true"
-                                                />
-                                            </div>
-
-                                            {/* Milestone 3: Departed */}
+                                            {/* Milestone 2: Departed */}
                                             <div className="relative z-10 flex flex-1 items-start gap-4 md:flex-col md:items-center md:gap-3">
                                                 <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-slate-200 bg-slate-50 text-slate-600 md:h-12 md:w-12">
                                                     {result.type === 'air' ? (
@@ -292,8 +252,10 @@ export default function TrackingTimeline({ results }: Props) {
                                                             className="size-3"
                                                             aria-hidden="true"
                                                         />
-                                                        {result.freight_date ||
-                                                            'Pending'}
+                                                        Flight:{' '}
+                                                        {formatFlightDate(
+                                                            result.tab_date,
+                                                        ) || 'Pending'}
                                                     </span>
                                                 </div>
                                             </div>

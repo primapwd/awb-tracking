@@ -1,7 +1,6 @@
 import { Head, router } from '@inertiajs/react';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
-import { submit } from '@/routes/track';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -15,6 +14,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import PublicLayout from '@/layouts/public-layout';
+import { submit } from '@/routes/track';
 
 type TrackingResult = {
     awb: string;
@@ -32,6 +32,14 @@ type Props = {
     maxCodes: number;
     query?: string | null;
 };
+
+/**
+ * Strip the trailing " Flight" label from a freight date so only the date
+ * portion shows: "3/3 Flight" -> "3/3", "06/06" -> "06/06".
+ */
+function formatFlightDate(value: string): string {
+    return value.replace(/\s*flight\s*$/i, '').trim();
+}
 
 export default function Track({ results, maxCodes, query }: Props) {
     const [codes, setCodes] = useState(query ?? '');
@@ -101,11 +109,9 @@ export default function Track({ results, maxCodes, query }: Props) {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Tracking Code</TableHead>
-                                    <TableHead>Logistic Company</TableHead>
                                     <TableHead>Weight</TableHead>
                                     <TableHead>Processed Date</TableHead>
-                                    <TableHead>Tab Date</TableHead>
-                                    <TableHead>Freight Date</TableHead>
+                                    <TableHead>Flight Date</TableHead>
                                     <TableHead>Type</TableHead>
                                     <TableHead>Status</TableHead>
                                 </TableRow>
@@ -116,15 +122,13 @@ export default function Track({ results, maxCodes, query }: Props) {
                                         <TableCell className="font-medium">
                                             {r.awb}
                                         </TableCell>
-                                        <TableCell>
-                                            {r.logistic_company}
-                                        </TableCell>
                                         <TableCell>{r.weight}</TableCell>
                                         <TableCell>
                                             {r.processed_date}
                                         </TableCell>
-                                        <TableCell>{r.tab_date}</TableCell>
-                                        <TableCell>{r.freight_date}</TableCell>
+                                        <TableCell>
+                                            {formatFlightDate(r.tab_date)}
+                                        </TableCell>
                                         <TableCell>
                                             <Badge
                                                 variant={
