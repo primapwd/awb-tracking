@@ -151,13 +151,6 @@ export default function NewPublicLayout({
                         &copy; {new Date().getFullYear()} OnTime Shipping Co.
                         All rights reserved.
                     </p>
-                    <div className="flex items-center gap-4 text-xs font-semibold text-slate-500">
-                        <span>Air Manifest API</span>
-                        <span>&middot;</span>
-                        <span>Ocean Containers</span>
-                        <span>&middot;</span>
-                        <span>VPS Terminal</span>
-                    </div>
                 </div>
             </footer>
         </div>
