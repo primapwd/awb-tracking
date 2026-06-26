@@ -38,7 +38,7 @@ export default function TrackingTimeline({ results }: Props) {
     const notFoundCount = results.length - processedCount;
 
     return (
-        <div className="mt-12 animate-in space-y-8 duration-500 fade-in slide-in-from-bottom-4">
+        <div className="mt-12 space-y-8 duration-500 fade-in slide-in-from-bottom-4 motion-safe:animate-in">
             {/* Tracking Overview Dashboard */}
             <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200/80 bg-slate-50/50 p-4 px-6">
                 <div className="flex items-center gap-2">
@@ -94,15 +94,24 @@ export default function TrackingTimeline({ results }: Props) {
                                         }`}
                                     >
                                         {!isProcessed ? (
-                                            <HelpCircle className="size-5" />
+                                            <HelpCircle
+                                                className="size-5"
+                                                aria-hidden="true"
+                                            />
                                         ) : result.type === 'air' ? (
-                                            <Plane className="size-5 rotate-45" />
+                                            <Plane
+                                                className="size-5 rotate-45"
+                                                aria-hidden="true"
+                                            />
                                         ) : (
-                                            <Anchor className="size-5" />
+                                            <Anchor
+                                                className="size-5"
+                                                aria-hidden="true"
+                                            />
                                         )}
                                     </div>
-                                    <div className="flex flex-col">
-                                        <h3 className="font-mono text-base font-bold tracking-tight text-slate-900">
+                                    <div className="flex min-w-0 flex-col">
+                                        <h3 className="truncate font-mono text-base font-bold tracking-tight text-slate-900">
                                             {result.awb}
                                         </h3>
                                         <div className="mt-1 flex items-center gap-2">
@@ -155,24 +164,30 @@ export default function TrackingTimeline({ results }: Props) {
                                 <div className="space-y-6 p-5 md:p-6">
                                     {/* Specs grid */}
                                     <div className="grid grid-cols-2 gap-4 rounded-xl bg-slate-50/50 p-4 text-xs font-semibold text-slate-600 sm:grid-cols-3">
-                                        <div className="flex items-center gap-2">
-                                            <Building2 className="size-4 text-slate-400" />
-                                            <div>
+                                        <div className="flex min-w-0 items-center gap-2">
+                                            <Building2
+                                                className="size-4 flex-shrink-0 text-slate-400"
+                                                aria-hidden="true"
+                                            />
+                                            <div className="min-w-0">
                                                 <span className="block text-[10px] tracking-wider text-slate-400 uppercase">
                                                     Carrier
                                                 </span>
-                                                <span className="text-slate-700">
+                                                <span className="block truncate text-slate-700">
                                                     {result.logistic_company}
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                            <Weight className="size-4 text-slate-400" />
-                                            <div>
+                                        <div className="flex min-w-0 items-center gap-2">
+                                            <Weight
+                                                className="size-4 flex-shrink-0 text-slate-400"
+                                                aria-hidden="true"
+                                            />
+                                            <div className="min-w-0">
                                                 <span className="block text-[10px] tracking-wider text-slate-400 uppercase">
                                                     Weight
                                                 </span>
-                                                <span className="text-slate-700">
+                                                <span className="block truncate text-slate-700">
                                                     {result.weight}
                                                 </span>
                                             </div>
@@ -193,14 +208,20 @@ export default function TrackingTimeline({ results }: Props) {
                                             {/* Milestone 1: Intake */}
                                             <div className="relative z-10 flex flex-1 items-start gap-4 md:flex-col md:items-center md:gap-3">
                                                 <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-emerald-200 bg-emerald-50 text-emerald-600 md:h-12 md:w-12">
-                                                    <CheckCircle2 className="size-4 md:size-5" />
+                                                    <CheckCircle2
+                                                        className="size-4 md:size-5"
+                                                        aria-hidden="true"
+                                                    />
                                                 </div>
                                                 <div className="flex flex-col text-left md:items-center md:text-center">
                                                     <span className="text-xs font-bold text-slate-800">
                                                         Intake & Scan
                                                     </span>
                                                     <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500">
-                                                        <Calendar className="size-3" />
+                                                        <Calendar
+                                                            className="size-3"
+                                                            aria-hidden="true"
+                                                        />
                                                         {result.processed_date ||
                                                             'N/A'}
                                                     </span>
@@ -209,20 +230,29 @@ export default function TrackingTimeline({ results }: Props) {
 
                                             {/* Arrow for Desktop */}
                                             <div className="hidden h-12 items-center justify-center self-center text-slate-300 md:flex">
-                                                <ChevronRight className="size-4" />
+                                                <ChevronRight
+                                                    className="size-4"
+                                                    aria-hidden="true"
+                                                />
                                             </div>
 
                                             {/* Milestone 2: Crate Loaded */}
                                             <div className="relative z-10 flex flex-1 items-start gap-4 md:flex-col md:items-center md:gap-3">
                                                 <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-blue-200 bg-blue-50 text-blue-600 md:h-12 md:w-12">
-                                                    <Box className="size-4 md:size-5" />
+                                                    <Box
+                                                        className="size-4 md:size-5"
+                                                        aria-hidden="true"
+                                                    />
                                                 </div>
                                                 <div className="flex flex-col text-left md:items-center md:text-center">
                                                     <span className="text-xs font-bold text-slate-800">
                                                         Cargo Bay Load
                                                     </span>
                                                     <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500">
-                                                        <Calendar className="size-3" />
+                                                        <Calendar
+                                                            className="size-3"
+                                                            aria-hidden="true"
+                                                        />
                                                         Tab:{' '}
                                                         {result.tab_date ||
                                                             'N/A'}
@@ -232,16 +262,25 @@ export default function TrackingTimeline({ results }: Props) {
 
                                             {/* Arrow for Desktop */}
                                             <div className="hidden h-12 items-center justify-center self-center text-slate-300 md:flex">
-                                                <ChevronRight className="size-4" />
+                                                <ChevronRight
+                                                    className="size-4"
+                                                    aria-hidden="true"
+                                                />
                                             </div>
 
                                             {/* Milestone 3: Departed */}
                                             <div className="relative z-10 flex flex-1 items-start gap-4 md:flex-col md:items-center md:gap-3">
                                                 <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-slate-200 bg-slate-50 text-slate-600 md:h-12 md:w-12">
                                                     {result.type === 'air' ? (
-                                                        <Plane className="size-4 rotate-45 md:size-5" />
+                                                        <Plane
+                                                            className="size-4 rotate-45 md:size-5"
+                                                            aria-hidden="true"
+                                                        />
                                                     ) : (
-                                                        <Anchor className="size-4 md:size-5" />
+                                                        <Anchor
+                                                            className="size-4 md:size-5"
+                                                            aria-hidden="true"
+                                                        />
                                                     )}
                                                 </div>
                                                 <div className="flex flex-col text-left md:items-center md:text-center">
@@ -249,7 +288,10 @@ export default function TrackingTimeline({ results }: Props) {
                                                         Manifest Departed
                                                     </span>
                                                     <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500">
-                                                        <Calendar className="size-3" />
+                                                        <Calendar
+                                                            className="size-3"
+                                                            aria-hidden="true"
+                                                        />
                                                         {result.freight_date ||
                                                             'Pending'}
                                                     </span>

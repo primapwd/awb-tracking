@@ -27,7 +27,7 @@ type Props = {
     query?: string | null;
 };
 
-export default function NewTrack({ results, maxCodes, query }: Props) {
+export default function NewTrackCard({ results, maxCodes, query }: Props) {
     // Derive the initial tab from the incoming query's shape (multi-code -> bulk).
     const [activeTab, setActiveTab] = useState<'quick' | 'bulk'>(() =>
         query && (query.includes('\n') || query.includes(','))
@@ -52,7 +52,7 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
 
         // Scan effect runs for the duration of the actual request.
         router.post(
-            submit().url,
+            '/new-card',
             { codes: inputCodes },
             {
                 onFinish: () => {
@@ -77,7 +77,7 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
             {/* Hero Split Section — fits one viewport */}
             <section
                 id="track"
-                className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden bg-[#f4fafa] py-12 lg:py-16"
+                className="relative flex min-h-[calc(100vh-6rem)] items-center overflow-hidden bg-white py-12 lg:py-16"
             >
                 {/* Clean technical dot grid background */}
                 <div className="absolute inset-0 z-0 bg-grid opacity-50" />
@@ -291,6 +291,6 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
     );
 }
 
-NewTrack.layout = (page: React.ReactNode) => (
-    <NewPublicLayout card={false}>{page}</NewPublicLayout>
+NewTrackCard.layout = (page: React.ReactNode) => (
+    <NewPublicLayout card={true}>{page}</NewPublicLayout>
 );

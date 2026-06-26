@@ -55,6 +55,9 @@ export default function IsometricShippingScene({
                     src="/isometric.png"
                     alt="Isometric logistics network: port crane, cargo ship, container yard, freight train, delivery truck, and cargo plane"
                     className="h-full w-full object-contain mix-blend-multiply"
+                    width={600}
+                    height={600}
+                    fetchPriority="high"
                     draggable={false}
                 />
             </div>
