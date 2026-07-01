@@ -1,5 +1,4 @@
 import { Link } from '@inertiajs/react';
-import { PackageSearch } from 'lucide-react';
 
 export default function PublicLayout({
     children,
@@ -14,7 +13,11 @@ export default function PublicLayout({
                         href="/"
                         className="flex items-center gap-2 font-semibold"
                     >
-                        <PackageSearch className="size-5" />
+                        <img
+                            src="/logo.png"
+                            alt="OnTime Shipping"
+                            className="size-7 object-contain"
+                        />
                         <span>OnTime Shipping - Tracking</span>
                     </Link>
                 </div>

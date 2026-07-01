@@ -1,5 +1,4 @@
 import { Link } from '@inertiajs/react';
-import { ShieldCheck } from 'lucide-react';
 import React from 'react';
 
 export default function NewPublicLayout({
@@ -27,29 +26,14 @@ export default function NewPublicLayout({
                         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
                             {/* Stopwatch-Airplane Logo */}
                             <Link
-                                href="/new"
+                                href="/"
                                 className="group flex items-center gap-3 rounded-xl transition-[transform,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-red-500/20 focus-visible:outline-none"
                             >
-                                <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF1E27] to-red-500 text-white shadow-md shadow-red-500/20 transition-[transform,shadow] duration-200 group-hover:scale-105">
-                                    {/* Inner Stopwatch + Airplane SVG */}
-                                    <svg
-                                        className="h-6 w-6 fill-none stroke-current stroke-[2]"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true"
-                                    >
-                                        <circle cx="12" cy="13" r="7" />
-                                        <path d="M12 9v4" />
-                                        <path d="M12 2v2" />
-                                        <path d="M10 2h4" />
-                                        <path d="M19 6l-1.5 1.5" />
-                                        <path
-                                            className="fill-white stroke-none"
-                                            d="M12 11.5l1.2 2.5-2.2-.5 1-.8-1.2-2.5z"
-                                            transform="rotate(45 12 13)"
-                                        />
-                                    </svg>
-                                </div>
+                                <img
+                                    src="/logo.png"
+                                    alt="OnTime Shipping"
+                                    className="h-10 w-10 object-contain transition-transform duration-200 group-hover:scale-105"
+                                />
                                 <div className="flex flex-col">
                                     <span className="text-base leading-none font-bold tracking-tight text-slate-900">
                                         OnTime Shipping
@@ -97,29 +81,14 @@ export default function NewPublicLayout({
                 <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
                     {/* Stopwatch-Airplane Logo */}
                     <Link
-                        href="/new"
+                        href="/"
                         className="group flex items-center gap-3 rounded-xl transition-[transform,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-red-500/20 focus-visible:outline-none"
                     >
-                        <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF1E27] to-red-500 text-white shadow-md shadow-red-500/20 transition-[transform,shadow] duration-200 group-hover:scale-105">
-                            {/* Inner Stopwatch + Airplane SVG */}
-                            <svg
-                                className="h-6 w-6 fill-none stroke-current stroke-[2]"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-hidden="true"
-                            >
-                                <circle cx="12" cy="13" r="7" />
-                                <path d="M12 9v4" />
-                                <path d="M12 2v2" />
-                                <path d="M10 2h4" />
-                                <path d="M19 6l-1.5 1.5" />
-                                <path
-                                    className="fill-white stroke-none"
-                                    d="M12 11.5l1.2 2.5-2.2-.5 1-.8-1.2-2.5z"
-                                    transform="rotate(45 12 13)"
-                                />
-                            </svg>
-                        </div>
+                        <img
+                            src="/logo.png"
+                            alt="OnTime Shipping"
+                            className="h-10 w-10 object-contain transition-transform duration-200 group-hover:scale-105"
+                        />
                         <div className="flex flex-col">
                             <span className="text-base leading-none font-bold tracking-tight text-slate-900">
                                 OnTime Shipping
