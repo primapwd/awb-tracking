@@ -64,12 +64,6 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
         );
     }
 
-    // Demo tracker injectors
-    function injectDemoCode(demoStr: string) {
-        setCodes(demoStr);
-        handleSubmit(null as any, demoStr);
-    }
-
     return (
         <>
             <Head title="Track Shipments - OnTime Shipping" />
@@ -96,7 +90,7 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
                             </span>
 
                             {/* Headline */}
-                            <h1 className="text-4xl leading-[1.1] font-extrabold tracking-tight text-balance text-slate-950 sm:text-5xl lg:text-[3.25rem]">
+                            <h1 className="text-center text-4xl leading-[1.1] font-extrabold tracking-tight text-balance text-slate-950 sm:text-5xl lg:text-left lg:text-[3.25rem]">
                                 Bringing the{' '}
                                 <span className="relative inline-block whitespace-nowrap">
                                     World Closer,
@@ -119,6 +113,11 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
                                 <span className="relative inline-block rotate-[-1.5deg] rounded-xl bg-linear-to-r from-red-600 to-red-500 px-4 py-1 text-white shadow-md shadow-red-500/10">
                                     Dreams
                                 </span>
+                                <img
+                                    src="/ots-brand.jpeg"
+                                    alt="Package being handed over"
+                                    className="ml-2 inline-block h-12 w-auto align-middle mix-blend-multiply sm:h-14 lg:h-16"
+                                />
                             </h1>
 
                             <p className="max-w-md text-base leading-relaxed text-slate-500">
@@ -268,7 +267,7 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
 
                         {/* Isometric — right column on desktop, below on mobile.
                             In-flow grid cell, so it never overlaps the text. */}
-                        <div className="flex items-center justify-center lg:justify-end">
+                        <div className="hidden items-center justify-center lg:flex lg:justify-end">
                             <IsometricShippingScene className="h-[45vh] w-full lg:h-[76vh]" />
                         </div>
                     </div>
