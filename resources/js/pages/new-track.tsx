@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import NewPublicLayout from '@/layouts/new-public-layout';
-import { submit } from '@/routes/track/new';
+import { submit } from '@/routes/track';
 
 type TrackingResult = {
     awb: string;
@@ -92,7 +92,7 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
                                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF1E27] opacity-75" />
                                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#FF1E27]" />
                                 </span>
-                                Global Freight Forwarding
+                                Suriname Live Tracking
                             </span>
 
                             {/* Headline */}
@@ -123,8 +123,7 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
 
                             <p className="max-w-md text-base leading-relaxed text-slate-500">
                                 End-to-end multimodal supply chain across air
-                                and ocean lanes. Track every shipment, anywhere
-                                in the world.
+                                and ocean lanes.
                             </p>
 
                             {/* Tracking module */}
@@ -260,6 +259,10 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
                                         </div>
                                     )}
                                 </form>
+                                <p className="text-[11px] italic text-slate-500">
+                                    At this moment tracking system only works for
+                                    USA air &amp; ocean freight
+                                </p>
                             </div>
                         </div>
 

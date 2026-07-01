@@ -153,7 +153,7 @@ export default function TrackingTimeline({ results }: Props) {
                                         {isProcessed ? (
                                             <>
                                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                Processed
+                                                Confirmed process warehouse USA
                                             </>
                                         ) : (
                                             <>
@@ -245,7 +245,7 @@ export default function TrackingTimeline({ results }: Props) {
                                                 </div>
                                                 <div className="flex flex-col text-left md:items-center md:text-center">
                                                     <span className="text-xs font-bold text-slate-800">
-                                                        Manifest Departed
+                                                        Flight Departed
                                                     </span>
                                                     <span className="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500">
                                                         <Calendar

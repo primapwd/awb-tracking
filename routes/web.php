@@ -15,16 +15,6 @@ Route::post('/track', [TrackController::class, 'track'])
     ->middleware('throttle:60,1')
     ->name('track.submit');
 
-Route::get('/new', [TrackController::class, 'newIndex'])->name('track.new');
-Route::post('/new', [TrackController::class, 'newTrack'])
-    ->middleware('throttle:60,1')
-    ->name('track.new.submit');
-
-Route::get('/new-card', [TrackController::class, 'newCardIndex'])->name('track.new_card');
-Route::post('/new-card', [TrackController::class, 'newCardTrack'])
-    ->middleware('throttle:60,1')
-    ->name('track.new_card.submit');
-
 Route::get('/healthz', function () {
     return response()->json([
         'ok' => true,

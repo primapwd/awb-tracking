@@ -54,9 +54,6 @@ export default function NewPublicLayout({
                                     <span className="text-base leading-none font-bold tracking-tight text-slate-900">
                                         OnTime Shipping
                                     </span>
-                                    <span className="mt-1 text-[10px] font-semibold tracking-wider text-red-500 uppercase">
-                                        Global Logistics
-                                    </span>
                                 </div>
                             </Link>
                         </div>
@@ -76,7 +73,7 @@ export default function NewPublicLayout({
                         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
                             <p className="text-xs text-slate-500">
                                 &copy; {new Date().getFullYear()} OnTime
-                                Shipping Co. All rights reserved.
+                                Shipping. All rights reserved.
                             </p>
                         </div>
                     </footer>
@@ -127,9 +124,6 @@ export default function NewPublicLayout({
                             <span className="text-base leading-none font-bold tracking-tight text-slate-900">
                                 OnTime Shipping
                             </span>
-                            <span className="mt-1 text-[10px] font-semibold tracking-wider text-red-500 uppercase">
-                                Global Logistics
-                            </span>
                         </div>
                     </Link>
                 </div>
@@ -146,11 +140,12 @@ export default function NewPublicLayout({
 
             {/* Premium Minimal Footer */}
             <footer className="border-t border-slate-200/80 bg-slate-50/50 py-8 text-center">
-                <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
-                    <p className="text-xs text-slate-500">
-                        &copy; {new Date().getFullYear()} OnTime Shipping Co.
+                <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
+                    <p className="text-sm text-slate-500">
+                        &copy; {new Date().getFullYear()} OnTime Shipping.
                         All rights reserved.
                     </p>
+                    <p className="text-sm text-slate-500">Built from scratch with love ❤️ No open-source code/platform & no scripts. Just passion mixed with creativity.</p>
                 </div>
             </footer>
         </div>
