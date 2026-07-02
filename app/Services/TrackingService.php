@@ -47,6 +47,10 @@ class TrackingService
         $enabledTypes = FreightType::where('enabled', true)->get();
 
         foreach ($enabledTypes as $type) {
+            if (empty($missCodes)) {
+                break;
+            }
+
             $snapshot = $this->snapshotStore->getSnapshot($type);
 
             foreach ($missCodes as $i => $code) {

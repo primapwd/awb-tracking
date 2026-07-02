@@ -21,9 +21,20 @@ type TrackingResult = {
     status: 'processed' | 'not_found';
 };
 
-type Props = {
-    results: TrackingResult[];
+type PendingResult = {
+    awb: string;
+    pending: true;
 };
+
+type Props = {
+    results: (TrackingResult | PendingResult)[];
+};
+
+function isPending(
+    result: TrackingResult | PendingResult,
+): result is PendingResult {
+    return 'pending' in result;
+}
 
 /**
  * Strip the trailing " Flight" label from a freight date so only the date
@@ -39,9 +50,10 @@ export default function TrackingTimeline({ results }: Props) {
     }
 
     const processedCount = results.filter(
-        (r) => r.status === 'processed',
+        (r) => !isPending(r) && r.status === 'processed',
     ).length;
-    const notFoundCount = results.length - processedCount;
+    const pendingCount = results.filter(isPending).length;
+    const notFoundCount = results.length - processedCount - pendingCount;
 
     return (
         <div className="mt-12 space-y-8 duration-500 fade-in slide-in-from-bottom-4 motion-safe:animate-in">
@@ -70,12 +82,40 @@ export default function TrackingTimeline({ results }: Props) {
                             </span>
                         </div>
                     )}
+                    {pendingCount > 0 && (
+                        <div className="flex items-center gap-1.5">
+                            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-slate-400" />
+                            <span className="text-slate-600">
+                                Checking: {pendingCount}
+                            </span>
+                        </div>
+                    )}
                 </div>
             </div>
 
             {/* Individual Tracking Cards */}
             <div className="space-y-6">
                 {results.map((result, idx) => {
+                    if (isPending(result)) {
+                        return (
+                            <div
+                                key={`${result.awb}-${idx}`}
+                                className="animate-pulse rounded-2xl border border-slate-200 bg-white p-5 md:p-6"
+                            >
+                                <div className="flex items-center gap-3">
+                                    <div className="h-11 w-11 rounded-xl bg-slate-100" />
+                                    <div className="flex min-w-0 flex-col gap-2">
+                                        <span className="font-mono text-base font-bold tracking-tight text-slate-900">
+                                            {result.awb}
+                                        </span>
+                                        <div className="h-3 w-32 rounded bg-slate-100" />
+                                    </div>
+                                </div>
+                                <div className="mt-6 h-16 rounded-xl bg-slate-50" />
+                            </div>
+                        );
+                    }
+
                     const isProcessed = result.status === 'processed';
 
                     return (

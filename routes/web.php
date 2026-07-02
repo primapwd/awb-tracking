@@ -14,6 +14,9 @@ Route::get('/track', fn () => redirect()->route('track'));
 Route::post('/track', [TrackController::class, 'track'])
     ->middleware('throttle:60,1')
     ->name('track.submit');
+Route::post('/api/track/lookup', [TrackController::class, 'lookupOne'])
+    ->middleware('throttle:120,1')
+    ->name('track.lookup');
 
 Route::get('/healthz', function () {
     return response()->json([

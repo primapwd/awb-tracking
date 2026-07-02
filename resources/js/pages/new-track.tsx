@@ -1,4 +1,4 @@
-import { Head, router } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { Search, TextCursorInput } from 'lucide-react';
 import type { FormEvent } from 'react';
 import React, { useState } from 'react';
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import NewPublicLayout from '@/layouts/new-public-layout';
-import { submit } from '@/routes/track';
+import { lookup } from '@/routes/track';
 
 type TrackingResult = {
     awb: string;
@@ -21,11 +21,53 @@ type TrackingResult = {
     status: 'processed' | 'not_found';
 };
 
+type PendingResult = {
+    awb: string;
+    pending: true;
+};
+
 type Props = {
     results?: TrackingResult[] | null;
     maxCodes: number;
     query?: string | null;
 };
+
+function parseCodes(raw: string, maxCodes: number): string[] {
+    return Array.from(
+        new Set(
+            raw
+                .split(/[\n,]+/)
+                .map((c) => c.trim().toUpperCase())
+                .filter(Boolean),
+        ),
+    ).slice(0, maxCodes);
+}
+
+function xsrfToken(): string {
+    const match = document.cookie.match(/(?:^|; )XSRF-TOKEN=([^;]*)/);
+
+    return match ? decodeURIComponent(match[1]) : '';
+}
+
+async function lookupCode(awb: string): Promise<TrackingResult> {
+    const response = await fetch(lookup().url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-XSRF-TOKEN': xsrfToken(),
+        },
+        body: JSON.stringify({ code: awb }),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Lookup failed for ${awb}`);
+    }
+
+    return response.json();
+}
 
 export default function NewTrack({ results, maxCodes, query }: Props) {
     // Derive the initial tab from the incoming query's shape (multi-code -> bulk).
@@ -37,31 +79,66 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
     const [codes, setCodes] = useState(query ?? '');
     const [processing, setProcessing] = useState(false);
     const [isScanning, setIsScanning] = useState(false);
+    const [liveResults, setLiveResults] = useState<
+        (TrackingResult | PendingResult)[] | null
+    >(results ?? null);
 
-    function handleSubmit(e: FormEvent, inputCodes: string = codes) {
+    async function handleSubmit(e: FormEvent, inputCodes: string = codes) {
         if (e) {
             e.preventDefault();
         }
 
-        if (!inputCodes.trim()) {
+        const parsed = parseCodes(inputCodes, maxCodes);
+
+        if (parsed.length === 0) {
             return;
         }
 
         setProcessing(true);
         setIsScanning(true);
+        setLiveResults(parsed.map((awb) => ({ awb, pending: true })));
 
-        // Scan effect runs for the duration of the actual request.
-        router.post(
-            submit().url,
-            { codes: inputCodes },
-            {
-                onFinish: () => {
-                    setProcessing(false);
-                    setIsScanning(false);
-                },
-                preserveScroll: true,
-            },
+        await Promise.allSettled(
+            parsed.map(async (awb, index) => {
+                try {
+                    const result = await lookupCode(awb);
+
+                    setLiveResults((prev) => {
+                        if (!prev) {
+                            return prev;
+                        }
+
+                        const next = [...prev];
+                        next[index] = result;
+
+                        return next;
+                    });
+                } catch {
+                    setLiveResults((prev) => {
+                        if (!prev) {
+                            return prev;
+                        }
+
+                        const next = [...prev];
+                        next[index] = {
+                            awb,
+                            logistic_company: '',
+                            weight: '',
+                            processed_date: '',
+                            tab_date: '',
+                            freight_date: '',
+                            type: 'air',
+                            status: 'not_found',
+                        };
+
+                        return next;
+                    });
+                }
+            }),
         );
+
+        setProcessing(false);
+        setIsScanning(false);
     }
 
     return (
@@ -71,7 +148,7 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
             {/* Hero Split Section — fits one viewport */}
             <section
                 id="track"
-                className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden bg-[#f4fafa] py-12 lg:py-16"
+                className="relative flex flex-1 items-start overflow-hidden bg-[#f4fafa] pt-4"
             >
                 {/* Clean technical dot grid background */}
                 <div className="absolute inset-0 z-0 bg-grid opacity-50" />
@@ -258,9 +335,9 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
                                         </div>
                                     )}
                                 </form>
-                                <p className="text-[11px] italic text-slate-500">
-                                    At this moment tracking system only works for
-                                    USA air &amp; ocean freight
+                                <p className="text-[11px] text-slate-500 italic">
+                                    At this moment tracking system only works
+                                    for USA air &amp; ocean freight
                                 </p>
                             </div>
                         </div>
@@ -273,10 +350,10 @@ export default function NewTrack({ results, maxCodes, query }: Props) {
                     </div>
 
                     {/* Results Container (Anchored here for seamless transitions) */}
-                    {results && results.length > 0 && (
-                        <TrackingTimeline results={results} />
+                    {liveResults && liveResults.length > 0 && (
+                        <TrackingTimeline results={liveResults} />
                     )}
-                    {results && results.length === 0 && (
+                    {liveResults && liveResults.length === 0 && (
                         <div className="mt-12 rounded-2xl border border-slate-200 bg-slate-50/50 p-10 text-center">
                             <p className="text-sm font-semibold text-slate-600">
                                 No results for the codes you entered.

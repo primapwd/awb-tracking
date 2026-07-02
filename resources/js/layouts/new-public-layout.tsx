@@ -67,7 +67,7 @@ export default function NewPublicLayout({
     }
 
     return (
-        <div className="flex min-h-screen flex-col bg-[#f4fafa] font-sans text-slate-900">
+        <div className="flex h-screen flex-col overflow-hidden bg-[#f4fafa] font-sans text-slate-900">
             {/* Skip Navigation Link for accessibility */}
             <a
                 href="#main-content"
@@ -102,19 +102,23 @@ export default function NewPublicLayout({
             <main
                 id="main-content"
                 tabIndex={-1}
-                className="flex-1 bg-[#f4fafa] focus:outline-none"
+                className="min-h-0 flex-1 overflow-y-auto bg-[#f4fafa] focus:outline-none"
             >
                 {children}
             </main>
 
             {/* Premium Minimal Footer */}
-            <footer className="border-t border-slate-200/80 bg-slate-50/50 py-8 text-center">
+            <footer className="flex-shrink-0 border-t border-slate-200/80 bg-slate-50/50 py-4 text-center">
                 <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
                     <p className="text-sm text-slate-500">
-                        &copy; {new Date().getFullYear()} OnTime Shipping.
-                        All rights reserved.
+                        &copy; {new Date().getFullYear()} OnTime Shipping. All
+                        rights reserved.
                     </p>
-                    <p className="text-sm text-slate-500">Built from scratch with love ❤️ No open-source code/platform & no scripts. Just passion mixed with creativity.</p>
+                    <p className="text-sm text-slate-500">
+                        Built from scratch with love ❤️ No open-source
+                        code/platform & no scripts. Just passion mixed with
+                        creativity.
+                    </p>
                 </div>
             </footer>
         </div>
